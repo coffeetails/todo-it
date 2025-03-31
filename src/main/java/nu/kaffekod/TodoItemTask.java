@@ -1,10 +1,22 @@
 package nu.kaffekod;
 
 public class TodoItemTask {
+    private static int sequenser = 0;
     private int id;
     private boolean assigned;
     private TodoItem todoItem; // Not allowed to be null
     private Person assignee;
+
+    public TodoItemTask(TodoItem todoItem, Person assignee) {
+        this(todoItem);
+        setAssigned(true);
+        setAssignee(assignee);
+    }
+
+    public TodoItemTask(TodoItem todoItem) {
+        this.id = getNextId();
+        setTodoItem(todoItem);
+    }
 
     public int getId() {
         return this.id;
@@ -34,11 +46,15 @@ public class TodoItemTask {
         this.assignee = assignee;
     }
 
+    private static int getNextId() {
+        return ++sequenser;
+    }
+
     public String getSummary() {
         String assigned = "No";
         if(isAssigned()) {
-            assigned = getAssignee().getFirstName();
+            assigned = getAssignee().getFirstName() + " " + getAssignee().getLastName();
         }
-        return "id: " + getId() + "\n assigned: " + assigned + "\n " + "\n todo item: " + getTodoItem().getTitle();
+        return "\nid: " + getId() + "\nassigned: " + assigned + "\ntodo item: " + getTodoItem().getTitle();
     }
 }

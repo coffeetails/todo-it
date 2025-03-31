@@ -11,6 +11,16 @@ public class TodoItem {
     private boolean done;
     private Person creator;
 
+    public TodoItem(String title, LocalDate deadline, String description, Person creator) {
+        this(title, deadline, description);
+        setCreator(creator);
+    }
+
+    public TodoItem(String title, LocalDate deadline, Person creator) {
+        this(title, deadline);
+        setCreator(creator);
+    }
+
     public TodoItem(String title, LocalDate deadline, String description) {
         this(title, deadline);
         setDescription(description);
@@ -71,19 +81,27 @@ public class TodoItem {
     }
 
     public boolean isOverdue() {
-        // Todo: Check deadline if overdue
-        return true;
+        return getDeadline().isBefore(LocalDate.now());
     }
+
 
     public String getSummary() {
         String creatorInfo = "";
         String descriptionInfo = "";
+        String overdueInfo = "\nStatus: Isn't done";
+
         if(this.creator != null) {
-            creatorInfo = "\nCreator: " + creator.getId() + " " + creator.getLastName();
+            creatorInfo = "\nCreator: " + getCreator().getFirstName() + " " + getCreator().getLastName();
         }
         if(this.description != null) {
             descriptionInfo = "\nDescription: " + getDescription();
         }
-        return "\nid: " + getId() + creatorInfo + "\nTitle: " + getTitle() + descriptionInfo + "\nDeadline: " + getDeadline();
+        if(isOverdue() && !isDone()) {
+            overdueInfo = "\nStatus: Is overdue";
+        } else if (isDone()) {
+            overdueInfo = "\nStatus: Is done";
+        }
+
+        return "\nid: " + getId() + creatorInfo + "\nTitle: " + getTitle() + descriptionInfo + "\nDeadline: " + getDeadline() + overdueInfo;
     }
 }
