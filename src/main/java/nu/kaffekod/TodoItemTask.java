@@ -7,6 +7,7 @@ public class TodoItemTask {
     private TodoItem todoItem; // Not allowed to be null
     private Person assignee;
 
+
     public TodoItemTask(TodoItem todoItem, Person assignee) {
         this(todoItem);
         setAssigned(true);
@@ -17,6 +18,7 @@ public class TodoItemTask {
         this.id = getNextId();
         setTodoItem(todoItem);
     }
+
 
     public int getId() {
         return this.id;
@@ -46,12 +48,13 @@ public class TodoItemTask {
         this.assignee = assignee;
     }
 
+
     private static int getNextId() {
         return ++sequenser;
     }
 
     public String getSummary() {
-        String assigned = "No";
+        String assigned = "None";
         if(isAssigned()) {
             assigned = getAssignee().getFirstName() + " " + getAssignee().getLastName();
         }

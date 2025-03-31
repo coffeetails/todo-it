@@ -11,6 +11,7 @@ public class TodoItem {
     private boolean done;
     private Person creator;
 
+
     public TodoItem(String title, LocalDate deadline, String description, Person creator) {
         this(title, deadline, description);
         setCreator(creator);
@@ -31,6 +32,7 @@ public class TodoItem {
         setDeadline(deadline);
         this.id = getNextId();
     }
+
 
     public int getId() {
         return this.id;
@@ -76,6 +78,7 @@ public class TodoItem {
         this.creator = creator;
     }
 
+
     private static int getNextId() {
         return ++sequenser;
     }
@@ -83,7 +86,6 @@ public class TodoItem {
     public boolean isOverdue() {
         return getDeadline().isBefore(LocalDate.now());
     }
-
 
     public String getSummary() {
         String creatorInfo = "";

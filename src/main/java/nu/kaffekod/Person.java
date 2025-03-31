@@ -9,6 +9,9 @@ public class Person {
 
 
     public Person(String firstName, String lastName, String email) {
+        isInputValid(firstName, "First name");
+        isInputValid(lastName, "Last name");
+        isInputValid(email, "Email");
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
@@ -25,6 +28,7 @@ public class Person {
     }
 
     public void setFirstName(String firstName) {
+        isInputValid(firstName, "First name");
         this.firstName = firstName;
     }
 
@@ -33,6 +37,7 @@ public class Person {
     }
 
     public void setLastName(String lastName) {
+        isInputValid(lastName, "Last name");
         this.lastName = lastName;
     }
 
@@ -41,11 +46,17 @@ public class Person {
     }
 
     public void setEmail(String email) {
+        isInputValid(email, "Email");
         this.email = email;
     }
 
+
     private static int getNextId() {
         return ++sequenser;
+    }
+
+    private static void isInputValid(String input, String inputName) {
+        if(input == null || input.isEmpty()) throw new IllegalArgumentException(inputName + " can't be null or empty");
     }
 
     public String getSummary() {
