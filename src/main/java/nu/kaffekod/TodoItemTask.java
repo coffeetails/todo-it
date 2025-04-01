@@ -15,6 +15,7 @@ public class TodoItemTask {
     }
 
     public TodoItemTask(TodoItem todoItem) {
+        isInputValid(todoItem, "Todo item");
         this.id = getNextId();
         setTodoItem(todoItem);
     }
@@ -37,6 +38,7 @@ public class TodoItemTask {
     }
 
     public void setTodoItem(TodoItem todoItem) {
+        isInputValid(todoItem, "Todo item");
         this.todoItem = todoItem;
     }
 
@@ -48,6 +50,10 @@ public class TodoItemTask {
         this.assignee = assignee;
     }
 
+
+    private static void isInputValid(TodoItem input, String inputName) {
+        if(input == null) throw new IllegalArgumentException(inputName + " can't be null");
+    }
 
     private static int getNextId() {
         return ++sequenser;

@@ -28,6 +28,8 @@ public class TodoItem {
     }
 
     public TodoItem(String title, LocalDate deadline) {
+        isInputValid(title, "Title");
+        isInputValid(deadline, "Deadline");
         setTitle(title);
         setDeadline(deadline);
         this.id = getNextId();
@@ -43,6 +45,7 @@ public class TodoItem {
     }
 
     public void setTitle(String title) {
+        isInputValid(title, "Title");
         this.title = title;
     }
 
@@ -59,6 +62,7 @@ public class TodoItem {
     }
 
     public void setDeadline(LocalDate deadline) {
+        isInputValid(deadline, "Deadline");
         this.deadline = deadline;
     }
 
@@ -85,6 +89,14 @@ public class TodoItem {
 
     public boolean isOverdue() {
         return getDeadline().isBefore(LocalDate.now());
+    }
+
+    private static void isInputValid(String input, String inputName) {
+        if(input == null || input.isEmpty()) throw new IllegalArgumentException(inputName + " can't be null or empty");
+    }
+
+    private static void isInputValid(LocalDate input, String inputName) {
+        if(input == null) throw new IllegalArgumentException(inputName + " can't be null");
     }
 
     public String getSummary() {
