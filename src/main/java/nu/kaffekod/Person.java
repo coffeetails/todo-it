@@ -1,17 +1,20 @@
 package nu.kaffekod;
 
+import java.util.Objects;
+
 public class Person {
-    private static int sequenser = 0;
+    private static int sequencer = 0;
     private int id; // Generated id
     private String firstName; // Not allowed to be null
     private String lastName; // Not allowed to be null
     private String email; // Not allowed to be null
+    private AppUser credentials;
 
 
     public Person(String firstName, String lastName, String email) {
-        isInputValid(firstName, "First name");
-        isInputValid(lastName, "Last name");
-        isInputValid(email, "Email");
+        validInput(firstName, "First name");
+        validInput(lastName, "Last name");
+        validInput(email, "Email");
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
@@ -28,7 +31,7 @@ public class Person {
     }
 
     public void setFirstName(String firstName) {
-        isInputValid(firstName, "First name");
+        validInput(firstName, "First name");
         this.firstName = firstName;
     }
 
@@ -37,7 +40,7 @@ public class Person {
     }
 
     public void setLastName(String lastName) {
-        isInputValid(lastName, "Last name");
+        validInput(lastName, "Last name");
         this.lastName = lastName;
     }
 
@@ -46,21 +49,43 @@ public class Person {
     }
 
     public void setEmail(String email) {
-        isInputValid(email, "Email");
+        validInput(email, "Email");
         this.email = email;
+    }
+
+    public AppUser getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(AppUser credentials) {
+        this.credentials = credentials;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(email, person.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email);
+    }
+
+    @Override
+    public String toString() {
+        return "\nid: " + getId() + "\nFull name: " + getFirstName() + " " + getLastName() + "\nEmail: " + getEmail();
     }
 
 
     private static int getNextId() {
-        return ++sequenser;
+        return ++sequencer;
     }
 
-    private static void isInputValid(String input, String inputName) {
+    private static void validInput(String input, String inputName) {
         if(input == null || input.isEmpty()) throw new IllegalArgumentException(inputName + " can't be null or empty");
-    }
-
-    public String getSummary() {
-        return "\nid: " + getId() + "\nFull name: " + getFirstName() + " " + getLastName() + "\nEmail: " + getEmail();
     }
 
 }

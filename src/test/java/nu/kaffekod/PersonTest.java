@@ -7,11 +7,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonTest {
-    static Person[] jdoe = new Person[1]; // Todo: Figure out why this works
+    static Person[] jdoe = new Person[2]; // Todo: Figure out why this works
 
     @BeforeAll
     static void initAll() {
         jdoe[0] = new Person("John", "Doe", "jdoe@protonmail.com");
+        jdoe[1] = new Person("John", "Doe", "jdoe@protonmail.com");
     }
 
     @Test
@@ -31,6 +32,27 @@ public class PersonTest {
     @Test
     void getIdTest() {
         assertEquals(1, jdoe[0].getId());
+    }
+
+    @Test
+    void equalsTest() {
+        assertFalse(jdoe[0].equals(jdoe[1]));
+    }
+
+    @Test
+    void hashCodeTest() {
+        int actual = jdoe[0].hashCode();
+        int expected = 1525958769;
+
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void toStringTest() {
+        String actual = jdoe[0].toString();
+        String expected = "\nid: 1\nFull name: John Doe\nEmail: jdoe@protonmail.com";
+
+        assertEquals(expected, actual);
     }
 
 

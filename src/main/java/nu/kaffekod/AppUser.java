@@ -9,7 +9,9 @@ public class AppUser {
 
 
     public AppUser(String username, String password, AppRole role) {
-
+        setUsername(username);
+        setPassword(password);
+        setRole(role);
     }
 
 
@@ -18,7 +20,7 @@ public class AppUser {
     }
 
     public void setUsername(String username) {
-        isInputValid(username, "User name");
+        validInput(username, "Username");
         this.username = username;
     }
 
@@ -27,7 +29,7 @@ public class AppUser {
     }
 
     public void setPassword(String password) {
-        isInputValid(password, "Password");
+        validInput(password, "Password");
         this.password = password;
     }
 
@@ -36,31 +38,32 @@ public class AppUser {
     }
 
     public void setRole(AppRole role) {
-        isInputValid(role, "Role");
+        validInput(role);
         this.role = role;
     }
 
 
-    private static void isInputValid(String input, String inputName) {
-        if(input == null || input.isEmpty()) throw new IllegalArgumentException(inputName + " can't be null");
-    }
-    private static void isInputValid(AppRole input, String inputName) {
-        if(input == null) throw new IllegalArgumentException(inputName + " can't be null");
-    }
-
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        AppUser appUser = (AppUser) o;
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        AppUser appUser = (AppUser) object;
         return Objects.equals(username, appUser.username) && role == appUser.role;
     }
-
+    @Override
     public int hashCode() {
         return Objects.hash(username, role);
     }
-
+    @Override
     public String toString() {
+        return "\napp user: " + getUsername() + "\nroll: " + getRole();
+    }
 
-        return null;
+
+    private static void validInput(String input, String inputName) {
+        if(input == null || input.isEmpty()) throw new IllegalArgumentException(inputName + " can't be null or empty");
+    }
+    private static void validInput(AppRole input) {
+        if(input == null) throw new IllegalArgumentException("Role can't be null");
     }
 }
 

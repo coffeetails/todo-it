@@ -20,7 +20,7 @@ public class Main {
         };
 
         for(Person person : people) {
-            System.out.println(person.getSummary());
+            System.out.println(person);
         }
 
         System.out.println("\n=========");
@@ -36,7 +36,7 @@ public class Main {
         todoItems[3].setDone(true);
 
         for(TodoItem todoItem : todoItems) {
-            System.out.println(todoItem.getSummary());
+            System.out.println(todoItem);
         }
 
         System.out.println("\n=========");
@@ -48,10 +48,20 @@ public class Main {
         };
 
         for(TodoItemTask todoItemTask : todoItemTasks) {
-            System.out.println(todoItemTask.getSummary());
+            System.out.println(todoItemTask);
         }
 
         System.out.println("\n=========");
 
+        AppUser[] appUsers = new AppUser[]{
+                new AppUser("PowerPelle", "lösenord", AppRole.ROLE_APP_ADMIN),
+                new AppUser("EddieEddaSkrivaren", "lösenord", AppRole.ROLE_APP_USER),
+        };
+
+        for(AppUser appUser : appUsers) {
+            System.out.println(appUser);
+        }
+
+        System.out.println("\n=========");
     }
 }

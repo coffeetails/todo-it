@@ -9,12 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TodoItemTest {
     static Person jdoe = new Person("John", "Doe", "jdoe@protonmail.com");
-    static TodoItem[] todoItems = new TodoItem[2];
+    static TodoItem[] todoItems = new TodoItem[3];
 
     @BeforeAll
     static void initAll() {
         todoItems[0] = new TodoItem("Tvätta fönster", LocalDate.now(), "Använd microduk & fönsterputs", jdoe);
         todoItems[1] = new TodoItem("Tvätta fönster", LocalDate.now().minusDays(1), "Använd microduk & fönsterputs", jdoe);
+        todoItems[2] = new TodoItem("Tvätta fönster", LocalDate.now(), "Använd microduk & fönsterputs", jdoe);
     }
 
     @Test
@@ -57,17 +58,33 @@ public class TodoItemTest {
     void isOverdueTest() {
         assertFalse(todoItems[0].isOverdue());
     }
+
     @Test
     void isActuallyOverdueTest() {
         assertTrue(todoItems[1].isOverdue());
     }
 
     @Test
-    void getSummaryTest() {
-        String actualSummary = todoItems[0].getSummary();
-        String expectedSummary = "\nid: 1\nCreator: John Doe\nTitle: Tvätta fönster\nDescription: Använd microduk & fönsterputs\nDeadline: " + LocalDate.now() + "\nStatus: Isn't done";
-        assertEquals(expectedSummary, actualSummary);
+    void equalsTest() {
+        assertFalse(todoItems[0].equals(todoItems[2]));
     }
+
+    @Test
+    void hashCodeTest() {
+        int actual = todoItems[0].hashCode();
+        int expected = -1952439939;
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void toStringTest() {
+        String actual = todoItems[0].toString();
+        String expected = "\nid: 1\nTitle: Tvätta fönster\nDescription: Använd microduk & fönsterputs\nDeadline: " + LocalDate.now() + "\nStatus: Isn't done";
+
+        assertEquals(expected, actual);
+    }
+
 
     @Test
     void setWrongDeadline() {

@@ -1,6 +1,7 @@
 package nu.kaffekod;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class TodoItem {
     private static int sequenser = 0;
@@ -28,8 +29,8 @@ public class TodoItem {
     }
 
     public TodoItem(String title, LocalDate deadline) {
-        isInputValid(title, "Title");
-        isInputValid(deadline, "Deadline");
+        validInput(title, "Title");
+        validInput(deadline, "Deadline");
         setTitle(title);
         setDeadline(deadline);
         this.id = getNextId();
@@ -45,7 +46,7 @@ public class TodoItem {
     }
 
     public void setTitle(String title) {
-        isInputValid(title, "Title");
+        validInput(title, "Title");
         this.title = title;
     }
 
@@ -62,7 +63,7 @@ public class TodoItem {
     }
 
     public void setDeadline(LocalDate deadline) {
-        isInputValid(deadline, "Deadline");
+        validInput(deadline, "Deadline");
         this.deadline = deadline;
     }
 
@@ -83,30 +84,23 @@ public class TodoItem {
     }
 
 
-    private static int getNextId() {
-        return ++sequenser;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TodoItem todoItem = (TodoItem) o;
+        return id == todoItem.id && done == todoItem.done && Objects.equals(title, todoItem.title) && Objects.equals(description, todoItem.description) && Objects.equals(deadline, todoItem.deadline);
     }
 
-    public boolean isOverdue() {
-        return getDeadline().isBefore(LocalDate.now());
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, deadline, done);
     }
 
-    private static void isInputValid(String input, String inputName) {
-        if(input == null || input.isEmpty()) throw new IllegalArgumentException(inputName + " can't be null or empty");
-    }
-
-    private static void isInputValid(LocalDate input, String inputName) {
-        if(input == null) throw new IllegalArgumentException(inputName + " can't be null");
-    }
-
-    public String getSummary() {
-        String creatorInfo = "";
+    @Override
+    public String toString() {
         String descriptionInfo = "";
         String overdueInfo = "\nStatus: Isn't done";
 
-        if(this.creator != null) {
-            creatorInfo = "\nCreator: " + getCreator().getFirstName() + " " + getCreator().getLastName();
-        }
         if(this.description != null) {
             descriptionInfo = "\nDescription: " + getDescription();
         }
@@ -116,6 +110,24 @@ public class TodoItem {
             overdueInfo = "\nStatus: Is done";
         }
 
-        return "\nid: " + getId() + creatorInfo + "\nTitle: " + getTitle() + descriptionInfo + "\nDeadline: " + getDeadline() + overdueInfo;
+        return "\nid: " + getId() + "\nTitle: " + getTitle() + descriptionInfo + "\nDeadline: " + getDeadline() + overdueInfo;
     }
+
+
+    private static int getNextId() {
+        return ++sequenser;
+    }
+
+    public boolean isOverdue() {
+        return getDeadline().isBefore(LocalDate.now());
+    }
+
+    private static void validInput(String input, String inputName) {
+        if(input == null || input.isEmpty()) throw new IllegalArgumentException(inputName + " can't be null or empty");
+    }
+
+    private static void validInput(LocalDate input, String inputName) {
+        if(input == null) throw new IllegalArgumentException(inputName + " can't be null");
+    }
+
 }

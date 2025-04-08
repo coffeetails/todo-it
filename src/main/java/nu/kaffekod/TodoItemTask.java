@@ -1,5 +1,7 @@
 package nu.kaffekod;
 
+import java.util.Objects;
+
 public class TodoItemTask {
     private static int sequenser = 0;
     private int id;
@@ -15,7 +17,7 @@ public class TodoItemTask {
     }
 
     public TodoItemTask(TodoItem todoItem) {
-        isInputValid(todoItem, "Todo item");
+        validInput(todoItem, "Todo item");
         this.id = getNextId();
         setTodoItem(todoItem);
     }
@@ -38,7 +40,7 @@ public class TodoItemTask {
     }
 
     public void setTodoItem(TodoItem todoItem) {
-        isInputValid(todoItem, "Todo item");
+        validInput(todoItem, "Todo item");
         this.todoItem = todoItem;
     }
 
@@ -51,7 +53,29 @@ public class TodoItemTask {
     }
 
 
-    private static void isInputValid(TodoItem input, String inputName) {
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TodoItemTask that = (TodoItemTask) o;
+        return id == that.id && assigned == that.assigned && Objects.equals(todoItem, that.todoItem);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, assigned, todoItem);
+    }
+
+    @Override
+    public String toString() {
+        String assigned = "None";
+        if(isAssigned()) {
+            assigned = getAssignee().getFirstName() + " " + getAssignee().getLastName();
+        }
+        return "\nid: " + getId() + "\nassigned: " + assigned + "\ntodo item: " + getTodoItem().getTitle();
+    }
+
+
+    private static void validInput(TodoItem input, String inputName) {
         if(input == null) throw new IllegalArgumentException(inputName + " can't be null");
     }
 
@@ -59,11 +83,4 @@ public class TodoItemTask {
         return ++sequenser;
     }
 
-    public String getSummary() {
-        String assigned = "None";
-        if(isAssigned()) {
-            assigned = getAssignee().getFirstName() + " " + getAssignee().getLastName();
-        }
-        return "\nid: " + getId() + "\nassigned: " + assigned + "\ntodo item: " + getTodoItem().getTitle();
-    }
 }

@@ -10,11 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TodoItemTaskTest {
     static Person jdoe = new Person("John", "Doe", "jdoe@protonmail.com");
     static TodoItem todo = new TodoItem("Tvätta fönster", LocalDate.now(), "Använd microduk & fönsterputs", jdoe);
-    static TodoItemTask[] todoItemTask = new TodoItemTask[1];
+    static TodoItemTask[] todoItemTask = new TodoItemTask[2];
 
     @BeforeAll
     static void initAll() {
         todoItemTask[0] = new TodoItemTask(todo, jdoe);
+        todoItemTask[1] = new TodoItemTask(todo, jdoe);
     }
 
     @Test
@@ -33,12 +34,26 @@ public class TodoItemTaskTest {
     }
 
     @Test
-    void getSummaryTest() {
-        String actualSummary = todoItemTask[0].getSummary();
-        String expectedSummary = "\nid: 1" + "\nassigned: John Doe\ntodo item: Tvätta fönster";
-
-        assertEquals(expectedSummary, actualSummary);
+    void equalsTest() {
+        assertFalse(todoItemTask[0].equals(todoItemTask[1]));
     }
+
+    @Test
+    void hashCodeTest() {
+        int actual = todoItemTask[0].hashCode();
+        int expected = -1952371026;
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void toStringTest() {
+        String actual = todoItemTask[0].toString();
+        String expected = "\nid: 1" + "\nassigned: John Doe\ntodo item: Tvätta fönster";
+
+        assertEquals(expected, actual);
+    }
+
 
     @Test
     void setWrongTodoItemTest() {
