@@ -31,7 +31,7 @@ public class PersonTest {
 
     @Test
     void getIdTest() {
-        assertEquals(1, jdoe[0].getId());
+        assertEquals(2, jdoe[1].getId());
     }
 
     @Test
