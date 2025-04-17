@@ -1,6 +1,8 @@
 package nu.kaffekod;
 
 
+import nu.kaffekod.dao.impl.AppUserDaoImpl;
+
 import java.time.LocalDate;
 
 public class Main {
@@ -63,5 +65,6 @@ public class Main {
         }
 
         System.out.println("\n=========");
+
     }
 }

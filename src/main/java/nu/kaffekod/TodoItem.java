@@ -1,11 +1,13 @@
 package nu.kaffekod;
 
+import nu.kaffekod.sequenser.TodoItemIdSequenser;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class TodoItem {
-    private static int sequenser = 0;
-    private int id; // Generated id
+    TodoItemIdSequenser sequenserInstance = TodoItemIdSequenser.getInstance();
+    private final int id; // Generated id
     private String title; // Not allowed to be null or empty
     private String description;
     private LocalDate deadline; // Not allowed to be null
@@ -33,7 +35,7 @@ public class TodoItem {
         validInput(deadline, "Deadline");
         setTitle(title);
         setDeadline(deadline);
-        this.id = getNextId();
+        this.id = sequenserInstance.nextId();
     }
 
 
@@ -113,10 +115,6 @@ public class TodoItem {
         return "\nid: " + getId() + "\nTitle: " + getTitle() + descriptionInfo + "\nDeadline: " + getDeadline() + overdueInfo;
     }
 
-
-    private static int getNextId() {
-        return ++sequenser;
-    }
 
     public boolean isOverdue() {
         return getDeadline().isBefore(LocalDate.now());

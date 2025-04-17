@@ -1,10 +1,12 @@
 package nu.kaffekod;
 
+import nu.kaffekod.sequenser.TodoItemTaskIdSequenser;
+
 import java.util.Objects;
 
 public class TodoItemTask {
-    private static int sequenser = 0;
-    private int id;
+    TodoItemTaskIdSequenser sequenserInstance = TodoItemTaskIdSequenser.getInstance();
+    private final int id;
     private boolean assigned;
     private TodoItem todoItem; // Not allowed to be null
     private Person assignee;
@@ -18,7 +20,7 @@ public class TodoItemTask {
 
     public TodoItemTask(TodoItem todoItem) {
         validInput(todoItem, "Todo item");
-        this.id = getNextId();
+        this.id = sequenserInstance.nextId();
         setTodoItem(todoItem);
     }
 
@@ -77,10 +79,6 @@ public class TodoItemTask {
 
     private static void validInput(TodoItem input, String inputName) {
         if(input == null) throw new IllegalArgumentException(inputName + " can't be null");
-    }
-
-    private static int getNextId() {
-        return ++sequenser;
     }
 
 }

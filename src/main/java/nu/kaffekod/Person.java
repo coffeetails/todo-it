@@ -1,10 +1,12 @@
 package nu.kaffekod;
 
+import nu.kaffekod.sequenser.PersonIdSequenser;
+
 import java.util.Objects;
 
 public class Person {
-    private static int sequencer = 0;
-    private int id; // Generated id
+    PersonIdSequenser sequencerInstance = PersonIdSequenser.getInstance();
+    private final int id; // Generated id
     private String firstName; // Not allowed to be null
     private String lastName; // Not allowed to be null
     private String email; // Not allowed to be null
@@ -18,7 +20,7 @@ public class Person {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
-        this.id = getNextId();
+        this.id = sequencerInstance.nextId();
     }
 
 
@@ -79,10 +81,6 @@ public class Person {
         return "\nid: " + getId() + "\nFull name: " + getFirstName() + " " + getLastName() + "\nEmail: " + getEmail();
     }
 
-
-    private static int getNextId() {
-        return ++sequencer;
-    }
 
     private static void validInput(String input, String inputName) {
         if(input == null || input.isEmpty()) throw new IllegalArgumentException(inputName + " can't be null or empty");
