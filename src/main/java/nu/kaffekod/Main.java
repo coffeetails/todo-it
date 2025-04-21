@@ -2,6 +2,9 @@ package nu.kaffekod;
 
 
 import nu.kaffekod.dao.impl.AppUserDaoImpl;
+import nu.kaffekod.dao.impl.PersonDaoImpl;
+import nu.kaffekod.dao.impl.TodoItemDaoImpl;
+import nu.kaffekod.dao.impl.TodoItemTaskDaoImpl;
 
 import java.time.LocalDate;
 
@@ -16,16 +19,23 @@ public class Main {
         "\n         \\   Let's get stuff done! "
         );
 
+        System.out.println("\n==========");
+        System.out.println(  "= PEOPLE =");
+
         Person[] people = new Person[]{
                 new Person("Pelle", "Påhittad", "pelle@protonmail.com"),
                 new Person("Eddie", "Hansen", "eddie@protonmail.com")
         };
 
+        PersonDaoImpl personDao = new PersonDaoImpl();
         for(Person person : people) {
-            System.out.println(person);
-        }
+            personDao.persist(person);
 
-        System.out.println("\n=========");
+        }
+        System.out.println(personDao.findAll().toString());
+
+        System.out.println("\n=============");
+        System.out.println(  "= TODO ITEM =");
 
         TodoItem[] todoItems = new TodoItem[]{
             new TodoItem("Dammsuga", LocalDate.parse("2025-01-30")),
@@ -37,11 +47,14 @@ public class Main {
         todoItems[0].setDone(true);
         todoItems[3].setDone(true);
 
+        TodoItemDaoImpl todoItemDao = new TodoItemDaoImpl();
         for(TodoItem todoItem : todoItems) {
-            System.out.println(todoItem);
+            todoItemDao.persist(todoItem);
         }
+        System.out.println(todoItemDao.findAll().toString());
 
-        System.out.println("\n=========");
+        System.out.println("\n==================");
+        System.out.println(  "= TODO ITEM TASK =");
 
         TodoItemTask[] todoItemTasks = new TodoItemTask[]{
             new TodoItemTask(todoItems[0]),
@@ -49,20 +62,26 @@ public class Main {
             new TodoItemTask(todoItems[2], people[1])
         };
 
+        TodoItemTaskDaoImpl todoItemTaskDao = new TodoItemTaskDaoImpl();
         for(TodoItemTask todoItemTask : todoItemTasks) {
-            System.out.println(todoItemTask);
+            todoItemTaskDao.persist(todoItemTask);
         }
+        System.out.println(todoItemTaskDao.findAll().toString());
 
-        System.out.println("\n=========");
+        System.out.println("\n============");
+        System.out.println(  "= APP USER =");
 
         AppUser[] appUsers = new AppUser[]{
                 new AppUser("PowerPelle", "lösenord", AppRole.ROLE_APP_ADMIN),
                 new AppUser("EddieEddaSkrivaren", "lösenord", AppRole.ROLE_APP_USER),
         };
 
+        AppUserDaoImpl appUserDao = new AppUserDaoImpl();
         for(AppUser appUser : appUsers) {
-            System.out.println(appUser);
+            appUserDao.persist(appUser);
         }
+        appUserDao.remove("PowerPelle");
+        System.out.println(appUserDao.findAll().toString());
 
         System.out.println("\n=========");
 

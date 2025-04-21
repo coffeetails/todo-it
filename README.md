@@ -193,7 +193,7 @@ Override:
 ---
 
 # Part 3
-*2025-04-08 - 2025-04-18   
+*2025-04-08 - 2025-04-22   
 Finished: 2025-04-XX*
 
 ## Topics:
@@ -322,7 +322,8 @@ PersonDAOCollection implements PersonDao
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | persist(todoItem) : TodoItem <br/> findById(id) : TodoItem <br/> findAll() : Collection\<TodoItem\> <br/> findAllByDoneStatus(done) : Collection\<TodoItem\> <br/> findAllByTitleContains(title) : Collection\<TodoItem\> <br/> findByPersonId(personId) : Collection\<TodoItem\> <br/> findByDeadlineBefore(date) : Collection\<TodoItem\> <br/> findByDeadlineAfter(date) : Collection\<TodoItem\> <br/> remove(id) : void |
 ↑   
-
+TodoItemDAOCollection implements PersonDao   
+↑  
 `TodoItemDAOCollection`
 
 ---
@@ -342,9 +343,10 @@ PersonDAOCollection implements PersonDao
 **TodoItemTask.class** objects where todoItemTask.assignee.id matches personId
 - **remove**: removes one **TodoItemTask.class** object from collection
 
-| \<\<interface\>\> <br />TodoItemTaskDAO                                                                                                                                                                                                                                                                                                                                                                                |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| persist(todoItemTask) : TodoItemTask <br/> findById(id) : TodoItemTask <br/> findAll() : Collection\<TodoItemTask\> <br/> findByAssignedStatus(status) : Collection\<TodoItem\> <br/> findByPersonId(personId) : Collection\<TodoItem\> <br/> remove(id) : Collection<TodoItem> |
-↑
-
+| \<\<interface\>\> <br />TodoItemTaskDAO                                                                                                                                                                                                                                 |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| persist(todoItemTask) : TodoItemTask <br/> findById(id) : TodoItemTask <br/> findAll() : Collection\<TodoItemTask\> <br/> findByAssignedStatus(status) : Collection\<TodoItemTask\> <br/> findByPersonId(personId) : Collection\<TodoItemTask\> <br/> remove(id) : Void |
+↑   
+TodoItemTaskDAOCollection implements PersonDao   
+↑  
 `TodoItemTaskDAOCollection`
