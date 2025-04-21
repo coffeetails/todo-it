@@ -1,6 +1,7 @@
-package nu.kaffekod.dao;
+package nu.kaffekod.dao.impl;
 
 import nu.kaffekod.AppUser;
+import nu.kaffekod.dao.IAppUserDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,16 @@ public class AppUserDaoImpl implements IAppUserDao {
     
     @Override
     public List<AppUser> findAll() {
-        return null;
+        return appUserDAOCollection;
     }
     
     @Override
     public void remove(String username) {
-
+        for(AppUser appUser : appUserDAOCollection) {
+            if(appUser.getUsername().equals(username)) {
+                appUserDAOCollection.remove(appUser);
+            }
+        }
     }
     
 }

@@ -1,6 +1,7 @@
-package nu.kaffekod.dao;
+package nu.kaffekod.dao.impl;
 
 import nu.kaffekod.TodoItemTask;
+import nu.kaffekod.dao.ITodoItemTaskDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,31 +12,49 @@ public class TodoItemTaskDaoImpl implements ITodoItemTaskDao {
 
     @Override
     public TodoItemTask persist(TodoItemTask todoItemTask) {
-        return null;
+        todoItemTaskDAOCollection.add(todoItemTask);
+        return todoItemTask;
     }
 
     @Override
     public TodoItemTask findById(int id) {
+        for (TodoItemTask todoItemTask : todoItemTaskDAOCollection) {
+            if (todoItemTask.getId() == id) {
+                return todoItemTask;
+            }
+        }
         return null;
     }
 
     @Override
     public List<TodoItemTask> findAll() {
-        return List.of();
+        return todoItemTaskDAOCollection;
     }
 
     @Override
     public List<TodoItemTask> findByAssignedStatus(boolean status) {
-        return List.of();
+        List<TodoItemTask> tempTodoItemTask = new ArrayList<>();
+        for (TodoItemTask todoItemTask : todoItemTaskDAOCollection) {
+            if (todoItemTask.isAssigned() == status) {
+                tempTodoItemTask.add(todoItemTask);
+            }
+        }
+        return tempTodoItemTask;
     }
 
     @Override
     public List<TodoItemTask> findByPersonId(int personId) {
-        return List.of();
+        List<TodoItemTask> tempTodoItemTask = new ArrayList<>();
+        for (TodoItemTask todoItemTask : todoItemTaskDAOCollection) {
+            if (todoItemTask.getAssignee().getId() == personId) {
+                tempTodoItemTask.add(todoItemTask);
+            }
+        }
+        return tempTodoItemTask;
     }
 
     @Override
     public void remove(int id) {
-
+        todoItemTaskDAOCollection.remove(id);
     }
 }

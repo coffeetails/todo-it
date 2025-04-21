@@ -2,10 +2,11 @@ package nu.kaffekod.dao;
 
 import nu.kaffekod.AppUser;
 
-public interface IAppUserDAO {
+import java.util.List;
+
+public interface IAppUserDao {
     public AppUser persist(AppUser appUser);
     public AppUser findByUsername(String username);
-    public AppUser findAll();
+    public List<AppUser> findAll();
     public void remove(String username);
 }
-

@@ -1,6 +1,7 @@
-package nu.kaffekod.dao;
+package nu.kaffekod.dao.impl;
 
 import nu.kaffekod.TodoItem;
+import nu.kaffekod.dao.ITodoItemDao;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,46 +12,83 @@ public class TodoItemDaoImpl implements ITodoItemDao {
 
     @Override
     public TodoItem persist(TodoItem todoItem) {
-        return null;
+        todoItemDAOCollection.add(todoItem);
+        return todoItem;
     }
 
     @Override
     public TodoItem findById(int id) {
+        for (TodoItem todoItem : todoItemDAOCollection) {
+            if (todoItem.getId() == id) {
+                return todoItem;
+            }
+        }
         return null;
     }
 
     @Override
     public List<TodoItem> findAll() {
-        return List.of();
+        return todoItemDAOCollection;
     }
 
     @Override
     public List<TodoItem> findAllByDoneStatus(boolean done) {
-        return List.of();
+        List<TodoItem> tempTodoItems = new ArrayList<>();
+        for (TodoItem todoItem : todoItemDAOCollection) {
+            if (todoItem.isDone()) {
+                tempTodoItems.add(todoItem);
+            }
+        }
+        return tempTodoItems;
     }
 
     @Override
     public List<TodoItem> findAllByTitleContains(String title) {
-        return List.of();
+        List<TodoItem> tempTodoItems = new ArrayList<>();
+        for (TodoItem todoItem : todoItemDAOCollection) {
+            if (todoItem.getTitle().contains(title)) {
+                tempTodoItems.add(todoItem);
+            }
+        }
+        return tempTodoItems;
     }
 
     @Override
     public List<TodoItem> findByPersonId(int personId) {
-        return List.of();
+        List<TodoItem> tempTodoItems = new ArrayList<>();
+        for (TodoItem todoItem : todoItemDAOCollection) {
+            if (todoItem.getCreator().getId() == personId) {
+                tempTodoItems.add(todoItem);
+            }
+        }
+        return tempTodoItems;
     }
 
     @Override
     public List<TodoItem> findByDeadlineBefore(LocalDate date) {
-        return List.of();
+        List<TodoItem> tempTodoItems = new ArrayList<>();
+        for (TodoItem todoItem : todoItemDAOCollection) {
+            if (todoItem.getDeadline().isBefore(date)) {
+                tempTodoItems.add(todoItem);
+            }
+        }
+        return tempTodoItems;
     }
 
     @Override
     public List<TodoItem> findByDeadlineAfter(LocalDate date) {
-        return List.of();
+        List<TodoItem> tempTodoItems = new ArrayList<>();
+        for (TodoItem todoItem : todoItemDAOCollection) {
+            if (todoItem.getDeadline().isAfter(date)) {
+                tempTodoItems.add(todoItem);
+            }
+        }
+        return tempTodoItems;
     }
 
     @Override
     public void remove(int id) {
-
+        todoItemDAOCollection.remove(id);
     }
+    
 }
