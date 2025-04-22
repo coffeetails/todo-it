@@ -35,6 +35,7 @@ public class AppUserDaoImpl implements IAppUserDao {
         for(AppUser appUser : appUserDAOCollection) {
             if(appUser.getUsername().equals(username)) {
                 appUserDAOCollection.remove(appUser);
+                break;
             }
         }
     }

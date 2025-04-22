@@ -46,11 +46,4 @@ public class PersonDaoImplTest {
         assertEquals(expected, actual);
     }
 
-/* todo
-    @Test
-    void removeUserByUsername() {
-        appUserDao.remove("PowerPelle");
-        assertTrue(appUserDao.findAll().isEmpty());
-    }
-*/
 }

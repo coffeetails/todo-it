@@ -37,6 +37,7 @@ public class TodoItemDaoImpl implements ITodoItemDao {
         for (TodoItem todoItem : todoItemDAOCollection) {
             if (todoItem.isDone()) {
                 tempTodoItems.add(todoItem);
+                break;
             }
         }
         return tempTodoItems;
